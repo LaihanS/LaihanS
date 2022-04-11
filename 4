@@ -1,0 +1,51 @@
+package Diseño;
+
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import utils.MySQLConexion;
+
+public class heretic extends GestionGente {
+    
+
+    heretic(String contraseña, String usuario) {
+       this.usuario = usuario;
+           this.contraseña = contraseña;
+    }
+
+    public void GestionGent() {
+
+     
+        MySQLConexion con = new MySQLConexion();
+        con.getConexion();
+
+        String query = "SELECT * from usuario where usuario ='" + usuario + "'" + "and contraseña ='" + contraseña + "'";
+
+        try {
+            con.sttment.execute(query);
+            con.rs = con.sttment.executeQuery(query);
+
+            if (usuario.isEmpty() || contraseña.isEmpty()) {
+
+                JOptionPane.showMessageDialog(null, "Debe llenar ambos campos correctamente", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+
+            } else {
+                if (con.rs.next()) {
+
+                    Usuarios usua = new Usuarios();
+                    usua.setVisible(true);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario no encontrado. Intente de nuevo o regístrese.", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+
+                }
+
+            }
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+}
