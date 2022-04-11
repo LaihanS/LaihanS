@@ -1,0 +1,32 @@
+package utils;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class MySQLConexion {
+    public Connection con;
+    public Statement sttment;
+    public ResultSet rs;
+	public Connection getConexion() {
+		
+	
+			
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+                                con = (Connection) DriverManager.getConnection( "jdbc:mysql://localhost:3306/usuarios","root","");
+                                System.err.println("Conexion establecida");
+			  
+                                sttment = con.createStatement(); 
+                                
+			} catch (SQLException e) {
+				System.out.println("Error >> Driver no Instalado (Error sql(!!");
+			}
+                         catch (ClassNotFoundException e) {
+                            System.out.println("Error >> Driver no Instalado (Error clase no encon(!!");
+                        }
+			return con;
+        }
+}
